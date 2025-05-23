@@ -257,25 +257,29 @@ window.onload = () => {
     const warzone = parseInt(tr.querySelector('input[data-field="warzone"]').value);
 
     fetch(apiURL + '/admin/updateUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-admin-password': adminPassword
-      },
-      body: JSON.stringify({ username, password, token, point, topgm, warzone })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert('บันทึกข้อมูลผู้ใช้สำเร็จ');
-        } else {
-          alert('บันทึกล้มเหลว: ' + (data.message || ''));
-        }
-      })
-      .catch(err => {
-        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูลผู้ใช้');
-        console.error(err);
-      });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-admin-password': adminPassword
+  },
+  body: JSON.stringify({
+    username,
+    fields: { password, token, point, topgm, warzone }
+  })
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    alert('บันทึกข้อมูลผู้ใช้สำเร็จ');
+  } else {
+    alert('บันทึกล้มเหลว: ' + (data.message || ''));
+  }
+})
+.catch(err => {
+  alert('เกิดข้อผิดพลาดในการบันทึกข้อมูลผู้ใช้');
+  console.error(err);
+});
+
   }
 
   // ===== Log Management =====
